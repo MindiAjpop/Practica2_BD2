@@ -1,0 +1,61 @@
+/* habilita la creación de usuarios y permisos */
+ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE; 
+
+
+
+/* crea los roles */
+CREATE ROLE Contabilidad;
+CREATE ROLE Ventas;
+CREATE ROLE IT;
+CREATE ROLE Gerencia;
+
+/* concede permisos a cada uno de los roles */
+GRANT
+    INSERT ANY TABLE,
+    SELECT ANY TABLE 
+    TO Contabilidad;
+
+GRANT 
+    CREATE ANY VIEW,
+    INSERT ANY TABLE,
+    SELECT ANY TABLE 
+    TO Ventas;
+
+GRANT
+    SELECT ANY TABLE,
+    DELETE ANY TABLE,
+    CREATE USER,
+    CREATE ANY TABLE 
+    TO IT;
+
+GRANT 
+    CREATE ANY VIEW,
+    UPDATE ANY TABLE,
+    INSERT ANY TABLE,
+    SELECT ANY TABLE,
+    DELETE ANY TABLE,
+    CREATE USER 
+    TO Gerencia;
+
+
+
+/* crea los usuarios con nombre y contraseña */
+CREATE USER Contabilidad1 IDENTIFIED BY bd2Conta1 DEFAULT TABLESPACE TSZAPATERIA;
+CREATE USER Contabilidad2 IDENTIFIED BY bd2Conta2 DEFAULT TABLESPACE TSZAPATERIA;
+CREATE USER Ventas1 IDENTIFIED BY bd2Ventas1 DEFAULT TABLESPACE TSZAPATERIA;
+CREATE USER Ventas2 IDENTIFIED BY bd2Ventas2 DEFAULT TABLESPACE TSZAPATERIA;
+CREATE USER IT1 IDENTIFIED BY bd2IT1 DEFAULT TABLESPACE TSZAPATERIA;
+CREATE USER IT2 IDENTIFIED BY bd2IT2 DEFAULT TABLESPACE TSZAPATERIA;
+CREATE USER Gerencia1 IDENTIFIED BY bd2Gerencia1 DEFAULT TABLESPACE TSZAPATERIA;
+CREATE USER Gerencia2 IDENTIFIED BY bd2Gerencia2 DEFAULT TABLESPACE TSZAPATERIA;
+
+
+/* Enlaza los usuarios con los roles según el cargo del usuario */
+GRANT Contabilidad TO Contabilidad1;
+GRANT Contabilidad TO Contabilidad2;
+GRANT Ventas TO Ventas1;
+GRANT Ventas TO Ventas2;
+GRANT IT TO IT1;
+GRANT IT TO IT2;
+GRANT Gerencia TO Gerencia1;
+GRANT Gerencia TO Gerencia2;
