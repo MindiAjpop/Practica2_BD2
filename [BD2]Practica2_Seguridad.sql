@@ -1,3 +1,22 @@
+/* Crea el tablespace tszapateria con los parámetros requeridos*/
+CREATE TABLESPACE TSZAPATERIA DATAFILE 'ZAPATERIADF.tbs' SIZE 250M AUTOEXTEND ON NEXT 1M MAXSIZE 500M;
+
+/* Habilita la sesión para crear el usuario y schema ZAPATERIA*/
+alter session set "_ORACLE_SCRIPT"=true;
+
+/* Crea el usuario zapateria en el tablespace creado anteriormente para crear un schema homónimo */
+CREATE USER ZAPATERIA IDENTIFIED BY ZAPATERIA DEFAULT TABLESPACE TSZAPATERIA;
+
+/* otorga los permisos pertinentes al usuario */
+
+GRANT create session TO ZAPATERIA;
+GRANT create table TO ZAPATERIA;
+GRANT create view TO ZAPATERIA;
+GRANT create any trigger TO ZAPATERIA;
+GRANT create any procedure TO ZAPATERIA;
+GRANT create sequence TO ZAPATERIA;
+GRANT create synonym TO ZAPATERIA;
+
 /* habilita la creación de usuarios y permisos */
 ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE; 
 
