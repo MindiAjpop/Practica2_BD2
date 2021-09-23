@@ -42,7 +42,7 @@ BEGIN -- Abrir el archivo «myfile.csv» ubicado en «/home/usr/scripts»
                     V_campo4 := REGEXP_SUBSTR(v_linea, '[^,]+',1,5);
 
 
-                    INSERT INTO CLIENTE VALUES (TO_NUMBER(V_id),V_campo1,V_campo2, V_campo3, V_campo4 );
+                    INSERT INTO ZAPATERIA.CLIENTE VALUES (TO_NUMBER(V_id),V_campo1,V_campo2, V_campo3, V_campo4 );
                     COMMIT;
                 ELSIF p_filename = '[BD2] Vendedores.csv' THEN
                     V_id := REGEXP_SUBSTR(v_linea, '[^,]+',1,1);
@@ -50,7 +50,7 @@ BEGIN -- Abrir el archivo «myfile.csv» ubicado en «/home/usr/scripts»
                     V_campo2:= REGEXP_SUBSTR(v_linea, '[^,]+',1,3);
                     V_campo3 := REGEXP_SUBSTR(v_linea, '[^,]+',1,4);
                     V_campo4 := REGEXP_SUBSTR(v_linea, '[^,]+',1,5);
-                    INSERT INTO VENDEDOR VALUES (TO_NUMBER(V_id),V_campo1,V_campo2, V_campo3, V_campo4 );
+                    INSERT INTO ZAPATERIA.VENDEDOR VALUES (TO_NUMBER(V_id),V_campo1,V_campo2, V_campo3, V_campo4 );
                     COMMIT;
                 ELSIF p_filename = '[BD2] Productos.csv' THEN
                     V_id := REGEXP_SUBSTR(v_linea, '[^,]+',1,1);
@@ -59,7 +59,7 @@ BEGIN -- Abrir el archivo «myfile.csv» ubicado en «/home/usr/scripts»
                     V_campo2 := SUBSTR(V_campo2,2);
                     V_campo3  := REGEXP_SUBSTR(v_linea, '[^,]+',1,4);
 
-                    INSERT INTO PRODUCTO VALUES (TO_NUMBER(V_id),V_campo1,TO_NUMBER(V_campo2), TO_NUMBER(V_campo3) );
+                    INSERT INTO ZAPATERIA.PRODUCTO VALUES (TO_NUMBER(V_id),V_campo1,TO_NUMBER(V_campo2), TO_NUMBER(V_campo3) );
                     COMMIT;
                 ELSIF p_filename = '[BD2] Facturas.csv' THEN
                     V_id := REGEXP_SUBSTR(v_linea, '[^,]+',1,1);
@@ -67,7 +67,7 @@ BEGIN -- Abrir el archivo «myfile.csv» ubicado en «/home/usr/scripts»
                     V_campo2 := REGEXP_SUBSTR(v_linea, '[^,]+',1,3);
                     V_campo3  := REGEXP_SUBSTR(v_linea, '[^,]+',1,4);
 
-                    INSERT INTO FACTURA VALUES (TO_NUMBER(V_id),TO_NUMBER(V_campo1),TO_NUMBER(V_campo2), TO_DATE(V_campo3,'DD/MM/YYYY') );
+                    INSERT INTO ZAPATERIA.FACTURA VALUES (TO_NUMBER(V_id),TO_NUMBER(V_campo1),TO_NUMBER(V_campo2), TO_DATE(V_campo3,'DD/MM/YYYY') );
                     COMMIT;
                 ELSIF p_filename = '[BD2] Detalle.csv' THEN
                     v_precio := 0;
@@ -75,15 +75,15 @@ BEGIN -- Abrir el archivo «myfile.csv» ubicado en «/home/usr/scripts»
                     V_campo2 := REGEXP_SUBSTR(v_linea, '[^,]+',1,2);
                     V_campo3 := REGEXP_SUBSTR(v_linea, '[^,]+',1,3);
                     
-                    SELECT COUNT(*) INTO existe  FROM PRODUCTO WHERE ID_PRODUCTO = TO_NUMBER(V_campo2);
+                    SELECT COUNT(*) INTO existe  FROM ZAPATERIA.PRODUCTO WHERE ID_PRODUCTO = TO_NUMBER(V_campo2);
                     
                     IF existe > 0 THEN
                         dbms_output.PUT_LINE ('AQUI ENTRÓ');
-                        SELECT PRECIO_PRODUCTO INTO v_precio  FROM PRODUCTO WHERE ID_PRODUCTO = TO_NUMBER(V_campo2);
+                        SELECT PRECIO_PRODUCTO INTO v_precio  FROM ZAPATERIA.PRODUCTO WHERE ID_PRODUCTO = TO_NUMBER(V_campo2);
                     END IF;
                     v_subtotal := TO_NUMBER(V_campo3) * v_precio;
                     
-                    INSERT INTO DETALLE VALUES (v_idDetalle, TO_NUMBER(V_campo1),TO_NUMBER(V_campo2), TO_NUMBER(V_campo3), v_subtotal );
+                    INSERT INTO ZAPATERIA.DETALLE VALUES (v_idDetalle, TO_NUMBER(V_campo1),TO_NUMBER(V_campo2), TO_NUMBER(V_campo3), v_subtotal );
                     v_idDetalle := v_idDetalle + 1;
                     COMMIT;
 
